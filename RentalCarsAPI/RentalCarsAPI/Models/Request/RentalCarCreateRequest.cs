@@ -12,5 +12,6 @@ namespace RentalCarsAPI.Models.Request
         public int? Year { get; set; }
         public int? CarType { get; set; }
         public string VIN { get; set; }
+        public string Color { get; set; }
     }
 }
