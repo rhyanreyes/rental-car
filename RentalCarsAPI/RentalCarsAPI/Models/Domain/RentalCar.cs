@@ -14,5 +14,7 @@ namespace RentalCarsAPI.Models.Domain
         public int CarType { get; set; }
         public string VIN { get; set; }
         public string Color { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
     }
 }
