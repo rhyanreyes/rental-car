@@ -10,13 +10,12 @@ using System.Web;
 
 namespace RentalCarsAPI.Services
 {
-    public class RentalCarsService
+    public class RentalCarsService : IRentalCarsService
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["RentalCars"].ConnectionString;
-
         SqlConnection GetConnection()
         {
-            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["RentalCars"].ConnectionString);
+            string connectionString = ConfigurationManager.ConnectionStrings["RentalCars"].ConnectionString;
+            var con = new SqlConnection(connectionString);
             con.Open();
 
             return con;
@@ -44,7 +43,7 @@ namespace RentalCarsAPI.Services
             }
         }
 
-        public List<RentalCar> GetAllRentalCars()
+        public List<RentalCar> GetRentalCars()
         {
             using (var con = GetConnection())
             {
@@ -178,6 +177,80 @@ namespace RentalCarsAPI.Services
             }
         }
 
+        public int CreateCarType(RentalCarTypeCreateRequest request)
+        {
+            using (var con = GetConnection())
+            {
+                var cmd = con.CreateCommand();
 
+                cmd.CommandText = "CarType_Insert";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CarType", request.CarType);
+
+                cmd.ExecuteNonQuery();
+
+                return (int)cmd.Parameters["@Id"].Value;
+            }
+        }
+
+        public List<CarType> GetCarTypes()
+        {
+            using (var con = GetConnection())
+            {
+                var cmd = con.CreateCommand();
+
+                cmd.CommandText = "CarType_SelectAll";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    List<CarType> carTypes = new List<CarType>();
+
+                    while (reader.Read())
+                    {
+                        CarType type = new CarType();
+
+                        type.Id = (int)reader["Id"];
+                        type.CarType = (string)reader["CarType"];
+
+                        carTypes.Add(type);
+                    }
+
+                    return carTypes;
+                }
+            }
+        }
+
+        public void UpdateCarType(RentalCarTypeUpdateRequest request)
+        {
+            using (var con = GetConnection())
+            {
+                var cmd = con.CreateCommand();
+
+                cmd.CommandText = "CarType_Update";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Id", request.Id);
+                cmd.Parameters.AddWithValue("@CarType", request.CarType);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteCarType(int id)
+        {
+            using (var con = GetConnection())
+            {
+                var cmd = con.CreateCommand();
+
+                cmd.CommandText = "CarType_Update";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
