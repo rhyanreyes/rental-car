@@ -10,7 +10,7 @@ using System.Web;
 
 namespace RentalCarsAPI.Services
 {
-    public class RentalLocationService
+    public class RentalLocationService : IRentalLocationService
     {
         SqlConnection GetConnection()
         {
@@ -111,6 +111,40 @@ namespace RentalCarsAPI.Services
             }
         }
 
+        public void UpdateRentalLocation(RentalLocationUpdateRequest request)
+        {
+            using (var con = GetConnection())
+            {
+                var cmd = con.CreateCommand();
+                cmd.CommandText = "RentalLocation_Update";
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@Id", request.Id);
+                cmd.Parameters.AddWithValue("@LocationName", request.LocationName);
+                cmd.Parameters.AddWithValue("@Street", request.Street);
+                cmd.Parameters.AddWithValue("@City", request.City);
+                cmd.Parameters.AddWithValue("@State", request.State);
+                cmd.Parameters.AddWithValue("@Zip", request.Zip);
+                cmd.Parameters.AddWithValue("@Phone", request.Phone);
+                cmd.Parameters.AddWithValue("@Lat", request.Lat);
+                cmd.Parameters.AddWithValue("@Long", request.Long);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteRentalLocation(int id)
+        {
+            using (var con = GetConnection())
+            {
+                var cmd = con.CreateCommand();
+                cmd.CommandText = "RentalLocation_Delete";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
