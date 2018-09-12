@@ -5,7 +5,7 @@ using System.Web;
 
 namespace RentalCarsAPI.Models.Domain
 {
-    public class CarType
+    public class CarTypeM
     {
         public int Id { get; set; }
         public string CarType { get; set; }

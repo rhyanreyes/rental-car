@@ -10,8 +10,8 @@ namespace RentalCarsAPI.Services
         int CreateRentalCar(RentalCarCreateRequest request);
         void DeleteCarType(int id);
         void DeleteRentalCar(int id);
-        List<CarType> GetCarTypes();
-        List<RentalCar> GetRentalCars();
+        List<RentalCar> GetAllRentalCars();
+        List<CarTypeM> GetCarTypes();
         RentalCar GetRentalCarById(int id);
         void UpdateCarType(RentalCarTypeUpdateRequest request);
         void UpdateRentalCar(RentalCarUpdateRequest request);

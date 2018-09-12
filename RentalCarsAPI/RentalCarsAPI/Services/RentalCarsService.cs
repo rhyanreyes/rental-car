@@ -43,7 +43,7 @@ namespace RentalCarsAPI.Services
             }
         }
 
-        public List<RentalCar> GetRentalCars()
+        public List<RentalCar> GetAllRentalCars()
         {
             using (var con = GetConnection())
             {
@@ -194,7 +194,7 @@ namespace RentalCarsAPI.Services
             }
         }
 
-        public List<CarType> GetCarTypes()
+        public List<CarTypeM> GetCarTypes()
         {
             using (var con = GetConnection())
             {
@@ -205,11 +205,11 @@ namespace RentalCarsAPI.Services
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    List<CarType> carTypes = new List<CarType>();
+                    List<CarTypeM> carTypes = new List<CarTypeM>();
 
                     while (reader.Read())
                     {
-                        CarType type = new CarType();
+                        CarTypeM type = new CarTypeM();
 
                         type.Id = (int)reader["Id"];
                         type.CarType = (string)reader["CarType"];
