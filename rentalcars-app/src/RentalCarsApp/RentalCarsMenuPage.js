@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { withRouter } from "react-router";
 import axios from "axios";
-
 import {
   Container,
   Divider,
@@ -16,10 +13,23 @@ import {
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-import RentalCarsInventory from "./RentalCarsInventory";
-import RentalCarsMenuPage from "./RentalCarsMenuPage";
+const style = {
+  h1: {
+    marginTop: "3em"
+  },
+  h2: {
+    margin: "4em 0em 2em"
+  },
+  h3: {
+    marginTop: "2em",
+    padding: "2em 0em"
+  },
+  last: {
+    marginBottom: "300px"
+  }
+};
 
-class RentalCarsApp extends Component {
+class RentalCarsMenuPage extends Component {
   state = {
     showRentalCarsInv: null
   };
@@ -33,10 +43,6 @@ class RentalCarsApp extends Component {
       },
       () => {
         console.log("showRentalCarsInv state: ", showRentalCarsInv);
-
-        if (showRentalCarsInv) {
-          this.props.history.push(`/cars`);
-        }
       }
     );
   };
@@ -50,12 +56,6 @@ class RentalCarsApp extends Component {
 
     return (
       <div>
-        {/* <h1>Rental Cars!</h1> */}
-        <Header
-          as="h1"
-          content="Rental Cars (using Semantic UI)"
-          textAlign="center"
-        />
         <Menu fixed="top" inverted>
           <Container>
             <Menu.Item as="a" header>
@@ -104,10 +104,6 @@ class RentalCarsApp extends Component {
             single column layouts.
           </p>
           {/* {showRentalCarsInv && <RentalCarsInventory />} */}
-          <Switch>
-            <Route path="/cars" component={RentalCarsInventory} />
-            {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
-          </Switch>
 
           {/* <Image
             src="/images/wireframe/media-paragraph.png"
@@ -207,4 +203,4 @@ class RentalCarsApp extends Component {
   }
 }
 
-export default withRouter(RentalCarsApp);
+export default RentalCarsMenuPage;

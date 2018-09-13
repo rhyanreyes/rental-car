@@ -17,11 +17,20 @@ import "semantic-ui-css/semantic.min.css";
 class RentalCarsInventory extends Component {
   state = {};
 
+  componentDidMount() {
+    console.log("RentalCarsInventory component mounted");
+  }
+
   render() {
     return (
       <div>
-        <Container>
-          <h2>Rental Cars Inventory!</h2>
+        <Container text style={{ marginTop: "7em" }}>
+          {/* <h2>Rental Cars Inventory!</h2> */}
+          <Header
+            as="h1"
+            content="Rental Cars Inventory! (using Semantic UI)"
+            textAlign="center"
+          />
         </Container>
       </div>
     );
