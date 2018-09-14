@@ -36,6 +36,7 @@ namespace RentalCarsAPI.Services
                 cmd.Parameters.AddWithValue("@CarType", request.CarType);
                 cmd.Parameters.AddWithValue("@VIN", request.VIN);
                 cmd.Parameters.AddWithValue("@Color", request.Color);
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
 

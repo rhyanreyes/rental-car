@@ -18,27 +18,60 @@ import "semantic-ui-css/semantic.min.css";
 
 import RentalCarsInventory from "./RentalCarsInventory";
 import RentalCarsMenuPage from "./RentalCarsMenuPage";
+import RentalCarsForm from "./RentalCarsForm";
+import RentalLocationForm from "./RentalLocationForm";
 
 class RentalCarsApp extends Component {
   state = {
     showRentalCarsInv: null
   };
 
-  handlerToggleMenu = () => {
+  handlerMenuBar = (event, data) => {
+    console.log("handlerMenuBar data props: ", data);
+
+    console.log("props: ", this.props);
+
+    switch (data.name) {
+      case "Home":
+        this.props.history.push("/");
+        break;
+    }
+  };
+
+  handlerDropdown = (event, data) => {
     const { showRentalCarsInv } = this.state;
 
-    this.setState(
-      {
-        showRentalCarsInv: !showRentalCarsInv
-      },
-      () => {
-        console.log("showRentalCarsInv state: ", showRentalCarsInv);
+    switch (data.text) {
+      case "Inventory":
+        this.setState(
+          {
+            showRentalCarsInv: !showRentalCarsInv
+          },
+          () => {
+            console.log("showRentalCarsInv state: ", showRentalCarsInv);
 
-        if (showRentalCarsInv) {
-          this.props.history.push(`/cars`);
-        }
-      }
-    );
+            this.props.history.push("/cars");
+          }
+        );
+        break;
+    }
+  };
+
+  handlerDropdownItem = (event, data) => {
+    event.stopPropagation();
+
+    console.log("DropdownItem data props: ", data);
+
+    switch (data.name) {
+      case "AddCar":
+        this.props.history.push(`/carform`);
+        break;
+      case "AddLocation":
+        this.props.history.push("/locationform");
+        break;
+      default:
+        break;
+    }
   };
 
   componentDidMount() {
@@ -51,11 +84,7 @@ class RentalCarsApp extends Component {
     return (
       <div>
         {/* <h1>Rental Cars!</h1> */}
-        <Header
-          as="h1"
-          content="Rental Cars (using Semantic UI)"
-          textAlign="center"
-        />
+
         <Menu fixed="top" inverted>
           <Container>
             <Menu.Item as="a" header>
@@ -71,42 +100,106 @@ class RentalCarsApp extends Component {
               /> */}
               Rental Cars
             </Menu.Item>
-            <Menu.Item as="a">Home</Menu.Item>
+            <Menu.Item as="a" onClick={this.handlerMenuBar} name="Home">
+              <Link to="/">Home</Link>
+            </Menu.Item>
 
-            <Dropdown item simple text="Dropdown">
+            <Dropdown
+              item
+              simple
+              text="Inventory"
+              onClick={this.handlerDropdown}
+            >
               <Dropdown.Menu>
-                <Dropdown.Item onClick={this.handlerToggleMenu}>
-                  Rental Cars Inventory
+                <Dropdown.Item onClick={this.handlerDropdownItem} name="AddCar">
+                  Add (Create)
                 </Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Divider />
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="ListCars"
+                >
+                  List All (Read/Get All)
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="UpdateCar"
+                >
+                  Update
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="RemoveCar"
+                >
+                  Remove (Delete)
+                </Dropdown.Item>
+                {/* <Dropdown.Divider />
                 <Dropdown.Header>Header Item</Dropdown.Header>
-                <Dropdown.Item>
+                <Dropdown.Item >
                   <i className="dropdown icon" />
-                  <span className="text">Submenu</span>
+                  <span className="text">Inventory</span>
                   <Dropdown.Menu>
-                    <Dropdown.Item>List Item</Dropdown.Item>
-                    <Dropdown.Item>List Item</Dropdown.Item>
+                    <Dropdown.Item>Create Car</Dropdown.Item>
+                    <Dropdown.Item>Get All Cars</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
+                <Dropdown.Item>List Item</Dropdown.Item> */}
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown
+              item
+              simple
+              text="Locations"
+              onClick={this.handlerDropdown}
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="AddLocation"
+                >
+                  Add (Create)
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="ListLocations"
+                >
+                  List All (Read/Get All)
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="UpdateLocation"
+                >
+                  Update
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="RemoveLocation"
+                >
+                  Remove (Delete)
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Container>
         </Menu>
         <Container text style={{ marginTop: "7em" }}>
-          <Header as="h1">Semantic UI React Fixed Template</Header>
+          {/* <Header as="h1">Semantic UI React Fixed Template</Header>
           <p>
             This is a basic fixed menu template using fixed size containers.
           </p>
           <p>
             A text container is used for the main container, which is useful for
             single column layouts.
-          </p>
+          </p> */}
+          <Header
+            as="h1"
+            content="Rental Cars (using Semantic UI)"
+            textAlign="center"
+          />
           {/* {showRentalCarsInv && <RentalCarsInventory />} */}
           <Switch>
             <Route path="/cars" component={RentalCarsInventory} />
             {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
+            <Route path="/carform" component={RentalCarsForm} />
+            <Route path="/locationform" component={RentalLocationForm} />
           </Switch>
 
           {/* <Image
@@ -185,7 +278,7 @@ class RentalCarsApp extends Component {
             </Grid>
 
             <Divider inverted section />
-            <Image centered size="mini" src="/logo.png" />
+            {/* <Image centered size="mini" src="/logo.png" /> */}
             <List horizontal inverted divided link>
               <List.Item as="a" href="#">
                 Site Map

@@ -27,7 +27,7 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "RentalLocation_Insert";
+                cmd.CommandText = "RentalLocations_Insert";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@LocationName", request.LocationName);
@@ -38,6 +38,7 @@ namespace RentalCarsAPI.Services
                 cmd.Parameters.AddWithValue("@Phone", request.Phone);
                 cmd.Parameters.AddWithValue("@Lat", request.Lat);
                 cmd.Parameters.AddWithValue("@Long", request.Long);
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
 
@@ -51,7 +52,7 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "RentalLocation_SelectAll";
+                cmd.CommandText = "RentalLocations_SelectAll";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 using (var reader = cmd.ExecuteReader())
@@ -116,7 +117,7 @@ namespace RentalCarsAPI.Services
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "RentalLocation_Update";
+                cmd.CommandText = "RentalLocations_Update";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", request.Id);
@@ -138,7 +139,7 @@ namespace RentalCarsAPI.Services
             using (var con = GetConnection())
             {
                 var cmd = con.CreateCommand();
-                cmd.CommandText = "RentalLocation_Delete";
+                cmd.CommandText = "RentalLocations_Delete";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", id);
