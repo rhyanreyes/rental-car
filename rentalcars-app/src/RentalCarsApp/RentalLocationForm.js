@@ -31,6 +31,8 @@ class RentalLocationForm extends Component {
     long: 0
   };
 
+  jumpRef = React.createRef();
+
   handlerSubmitForm = () => {
     const newLocation = this.readForm();
 
@@ -46,6 +48,11 @@ class RentalLocationForm extends Component {
         console.log(response);
 
         this.clearForm();
+
+        this.jumpRef.current.scrollIntoView({
+          block: "start",
+          behavior: "instant"
+        });
       })
       .catch(error => {
         console.log("POST failed!");
@@ -92,13 +99,19 @@ class RentalLocationForm extends Component {
     //   country: "",
     //   phone: "(310) 274-6969"
     // });
+
+    this.jumpRef.current.scrollIntoView({
+      block: "start",
+      behavior: "instant"
+    });
   }
 
   render() {
     return (
       <div>
-        <Header as="h1" content="Rental Location Form!" textAlign="center" />
-        <Container text style={{ marginTop: "7em" }} textAlign="left">
+        <Container fluid text style={{ marginTop: "7em" }} textAlign="left">
+          <div ref={this.jumpRef} />
+          <Header as="h1" content="Rental Location Form!" textAlign="center" />
           <Form>
             {/* <Form.Field>
               <label>First Name</label>

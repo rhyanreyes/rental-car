@@ -15,7 +15,8 @@ import {
   Form,
   Icon,
   Label,
-  Table
+  Table,
+  Item
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
@@ -26,13 +27,20 @@ class RentalLocations extends Component {
     locationList: []
   };
 
+  jumpRef = React.createRef();
+
   listRentalLocations = () => {
     listRentalLocationsGet()
       .then(response => {
         console.log("GET success!");
         console.log(response);
 
-        this.setState({ locationList: response.data });
+        this.setState({ locationList: response.data }, () => {
+          this.jumpRef.current.scrollIntoView({
+            block: "start",
+            behavior: "instant"
+          });
+        });
       })
       .catch(error => {
         console.log("GET failed!");
@@ -47,10 +55,16 @@ class RentalLocations extends Component {
   }
 
   render() {
+    const { locationList } = this.state;
+
+    console.log("render locationList: ", locationList);
+
     return (
       <div>
-        <Header as="h1" content="Rental Locations!" textAlign="center" />
-        <Table celled>
+        <Container fluid text style={{ marginTop: "7em" }} textAlign="left">
+          <div ref={this.jumpRef} />
+          <Header as="h1" content="Rental Locations!" textAlign="center" />
+          {/* <Table celled>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Header</Table.HeaderCell>
@@ -97,7 +111,60 @@ class RentalLocations extends Component {
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
-        </Table>
+        </Table> */}
+
+          {/* <Item.Group>
+          <Item>
+            <Item.Image size="tiny" src="/images/wireframe/image.png" />
+
+            <Item.Content>
+              <Item.Header as="a">Header</Item.Header>
+              <Item.Meta>Description</Item.Meta>
+              <Item.Description>
+                <Image src="/images/wireframe/short-paragraph.png" />
+              </Item.Description>
+              <Item.Extra>Additional Details</Item.Extra>
+            </Item.Content>
+          </Item>
+
+          <Item>
+            <Item.Image size="tiny" src="/images/wireframe/image.png" />
+
+            <Item.Content>
+              <Item.Header as="a">Header</Item.Header>
+              <Item.Meta>Description</Item.Meta>
+              <Item.Description>
+                <Image src="/images/wireframe/short-paragraph.png" />
+              </Item.Description>
+              <Item.Extra>Additional Details</Item.Extra>
+            </Item.Content>
+          </Item>
+        </Item.Group> */}
+
+          <Item.Group>
+            <Grid container columns={3}>
+              {locationList.map(location => (
+                <Grid.Column key={location.id}>
+                  <Item>
+                    <Item.Content>
+                      <Item.Header as="a">{location.locationName}</Item.Header>
+                      <Item.Description>
+                        <div>{location.phone}</div>
+                        <div>{location.street}</div>
+                        <div>
+                          {location.city}
+                          {location.state !== "" ? "," : ""} {location.state}{" "}
+                          {location.zip}
+                        </div>
+                        <div>{location.country}</div>
+                      </Item.Description>
+                    </Item.Content>
+                  </Item>
+                </Grid.Column>
+              ))}
+            </Grid>
+          </Item.Group>
+        </Container>
       </div>
     );
   }
