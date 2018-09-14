@@ -67,15 +67,16 @@ class RentalLocationForm extends Component {
   componentDidMount() {
     console.log("RentalLocationForm component mounted");
 
-    this.setState({
-      locationName: "Beverly Hills",
-      street: "9732 S. Santa Monica Blvd.",
-      city: "Beverly Hills",
-      state: "CA",
-      zip: "90210",
-      country: "",
-      phone: "(310) 274-6969"
-    });
+    // Setting sample data
+    // this.setState({
+    //   locationName: "Beverly Hills",
+    //   street: "9732 S. Santa Monica Blvd.",
+    //   city: "Beverly Hills",
+    //   state: "CA",
+    //   zip: "90210",
+    //   country: "",
+    //   phone: "(310) 274-6969"
+    // });
   }
 
   render() {
