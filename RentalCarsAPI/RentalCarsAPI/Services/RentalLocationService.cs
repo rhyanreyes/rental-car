@@ -95,13 +95,19 @@ namespace RentalCarsAPI.Services
                         object latValue = reader["Lat"];
                         if (latValue != DBNull.Value)
                         {
-                            location.Lat = (float)latValue;
+                            location.Lat = (double)latValue;
                         }
 
                         object longValue = reader["Long"];
                         if (longValue != DBNull.Value)
                         {
-                            location.Long = (float)longValue;
+                            location.Long = (double)longValue;
+                        }
+
+                        object dateModifiedValue = reader["DateModified"];
+                        if (dateModifiedValue != DBNull.Value)
+                        {
+                            location.DateModified = (DateTime)dateModifiedValue;
                         }
 
                         rentalLocations.Add(location);

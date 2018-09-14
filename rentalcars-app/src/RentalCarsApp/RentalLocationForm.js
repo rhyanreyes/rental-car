@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 import {
   Container,
@@ -45,6 +44,8 @@ class RentalLocationForm extends Component {
       .then(response => {
         console.log("POST success!");
         console.log(response);
+
+        this.clearForm();
       })
       .catch(error => {
         console.log("POST failed!");
@@ -63,6 +64,20 @@ class RentalLocationForm extends Component {
     lat: this.state.lat,
     long: this.state.long
   });
+
+  clearForm = () => {
+    this.setState({
+      locationName: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
+      phone: "",
+      lat: 0,
+      long: 0
+    });
+  };
 
   componentDidMount() {
     console.log("RentalLocationForm component mounted");

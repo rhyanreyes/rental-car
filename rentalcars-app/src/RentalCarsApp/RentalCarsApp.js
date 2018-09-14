@@ -20,6 +20,7 @@ import RentalCarsInventory from "./RentalCarsInventory";
 import RentalCarsMenuPage from "./RentalCarsMenuPage";
 import RentalCarsForm from "./RentalCarsForm";
 import RentalLocationForm from "./RentalLocationForm";
+import RentalLocations from "./RentalLocations";
 
 class RentalCarsApp extends Component {
   state = {
@@ -68,6 +69,9 @@ class RentalCarsApp extends Component {
         break;
       case "AddLocation":
         this.props.history.push("/locationform");
+        break;
+      case "ListLocations":
+        this.props.history.push("/locations");
         break;
       default:
         break;
@@ -200,6 +204,7 @@ class RentalCarsApp extends Component {
             {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
             <Route path="/carform" component={RentalCarsForm} />
             <Route path="/locationform" component={RentalLocationForm} />
+            <Route path="/locations" component={RentalLocations} />
           </Switch>
 
           {/* <Image

@@ -13,7 +13,7 @@ namespace RentalCarsAPI.Models.Request
         public string State { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
-        public float? Lat { get; set; }
-        public float? Long { get; set; }
+        public double? Lat { get; set; }
+        public double? Long { get; set; }
     }
 }

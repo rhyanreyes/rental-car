@@ -5,3 +5,9 @@ export function createRentalLocationPost(locationObj) {
 
   return axios.post(url, locationObj);
 }
+
+export function listRentalLocationsGet() {
+  const url = `/api/rentallocation`;
+
+  return axios.get(url);
+}
