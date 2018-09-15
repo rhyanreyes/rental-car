@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import axios from "axios";
 
 import {
   Container,
@@ -73,6 +72,9 @@ class RentalCarsApp extends Component {
       case "ListLocations":
         this.props.history.push("/locations");
         break;
+      case "UpdateLocation":
+        this.props.history.push("/locations/update");
+        break;
       default:
         break;
     }
@@ -115,6 +117,7 @@ class RentalCarsApp extends Component {
               onClick={this.handlerDropdown}
             >
               <Dropdown.Menu>
+                <Dropdown.Header>Rental Cars</Dropdown.Header>
                 <Dropdown.Item onClick={this.handlerDropdownItem} name="AddCar">
                   Add (Create)
                 </Dropdown.Item>
@@ -136,9 +139,9 @@ class RentalCarsApp extends Component {
                 >
                   Remove (Delete)
                 </Dropdown.Item>
-                {/* <Dropdown.Divider />
-                <Dropdown.Header>Header Item</Dropdown.Header>
-                <Dropdown.Item >
+                <Dropdown.Divider />
+                <Dropdown.Header>Car Types</Dropdown.Header>
+                {/* <Dropdown.Item>
                   <i className="dropdown icon" />
                   <span className="text">Inventory</span>
                   <Dropdown.Menu>
@@ -147,6 +150,30 @@ class RentalCarsApp extends Component {
                   </Dropdown.Menu>
                 </Dropdown.Item>
                 <Dropdown.Item>List Item</Dropdown.Item> */}
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="AddCarType"
+                >
+                  Add (Create)
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="ListCarTypes"
+                >
+                  List All (Read/Get All)
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="UpdateCarType"
+                >
+                  Update
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="RemoveCarType"
+                >
+                  Remove (Delete)
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <Dropdown
@@ -198,14 +225,6 @@ class RentalCarsApp extends Component {
             content="Rental Cars (using Semantic UI)"
             textAlign="center"
           />
-          {/* {showRentalCarsInv && <RentalCarsInventory />} */}
-          <Switch>
-            <Route path="/cars" component={RentalCarsInventory} />
-            {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
-            <Route path="/carform" component={RentalCarsForm} />
-            <Route path="/locationform" component={RentalLocationForm} />
-            <Route path="/locations" component={RentalLocations} />
-          </Switch>
 
           {/* <Image
             src="/images/wireframe/media-paragraph.png"
@@ -236,6 +255,24 @@ class RentalCarsApp extends Component {
             style={{ marginTop: "2em" }}
           /> */}
         </Container>
+
+        {/* {showRentalCarsInv && <RentalCarsInventory />} */}
+        <Switch>
+          <Route path="/cars" component={RentalCarsInventory} />
+          {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
+          <Route path="/carform" component={RentalCarsForm} />
+          <Route exact path="/locationform" component={RentalLocationForm} />
+          <Route
+            path="/locationform/:locationId(\d+)"
+            component={RentalLocationForm}
+          />
+          <Route exact path="/locations" component={RentalLocations} />
+          <Route
+            path="/locations/update"
+            render={props => <RentalLocations {...props} updateMode={true} />}
+          />
+          {/* <Route path="locations/update" component={RentalLocations} /> */}
+        </Switch>
 
         <Segment
           inverted

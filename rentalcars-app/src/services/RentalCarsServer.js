@@ -11,3 +11,9 @@ export function listRentalLocationsGet() {
 
   return axios.get(url);
 }
+
+export function listRentalLocationGet(id) {
+  const url = `/api/rentallocation/${id}`;
+
+  return axios.get(url);
+}

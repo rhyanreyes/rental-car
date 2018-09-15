@@ -24,10 +24,23 @@ import { listRentalLocationsGet } from "../services/RentalCarsServer";
 
 class RentalLocations extends Component {
   state = {
-    locationList: []
+    locationList: [],
+    updateMode: null,
+    headerTitle: ""
   };
 
   jumpRef = React.createRef();
+
+  handlerItemClick = location => {
+    const { updateMode } = this.state;
+
+    if (updateMode) {
+      console.log("Item clicked");
+      console.log(location);
+
+      this.props.history.push(`/locationform/${location.id}`);
+    }
+  };
 
   listRentalLocations = () => {
     listRentalLocationsGet()
@@ -52,18 +65,56 @@ class RentalLocations extends Component {
     console.log("RentalLocations component mounted");
 
     this.listRentalLocations();
+
+    console.log("RentalLocations mounted props: ", this.props);
+
+    // if (this.props.location.pathname === "/locations/update") {
+    //   this.setState({ updateMode: true });
+    // } else {
+    //   this.setState({ updateMode: false });
+    // }
+
+    if (this.props.updateMode === true) {
+      this.setState({
+        updateMode: true,
+        headerTitle: "Rental Locations Update!"
+      });
+    } else {
+      this.setState({ updateMode: false, headerTitle: "Rental Locations!" });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.location !== prevProps.location) {
+      console.log("RentalLocations updated props: ", this.props);
+
+      //   if (this.props.location.pathname === "/locations/update") {
+      //     this.setState({ updateMode: true });
+      //   } else {
+      //     this.setState({ updateMode: false });
+      //   }
+
+      if (this.props.updateMode === true) {
+        this.setState({
+          updateMode: true,
+          headerTitle: "Rental Locations Update!"
+        });
+      } else {
+        this.setState({ updateMode: false, headerTitle: "Rental Locations!" });
+      }
+    }
   }
 
   render() {
-    const { locationList } = this.state;
+    const { locationList, headerTitle } = this.state;
 
     console.log("render locationList: ", locationList);
 
     return (
       <div>
-        <Container fluid text style={{ marginTop: "7em" }} textAlign="left">
+        <Container fluid style={{ marginTop: "7em" }} textAlign="left">
           <div ref={this.jumpRef} />
-          <Header as="h1" content="Rental Locations!" textAlign="center" />
+          <Header as="h1" content={headerTitle} textAlign="center" />
           {/* <Table celled>
           <Table.Header>
             <Table.Row>
@@ -142,24 +193,33 @@ class RentalLocations extends Component {
         </Item.Group> */}
 
           <Item.Group>
-            <Grid container columns={3}>
+            <Grid container stackable columns={3}>
               {locationList.map(location => (
-                <Grid.Column key={location.id}>
-                  <Item>
-                    <Item.Content>
-                      <Item.Header as="a">{location.locationName}</Item.Header>
-                      <Item.Description>
-                        <div>{location.phone}</div>
-                        <div>{location.street}</div>
-                        <div>
-                          {location.city}
-                          {location.state !== "" ? "," : ""} {location.state}{" "}
-                          {location.zip}
-                        </div>
-                        <div>{location.country}</div>
-                      </Item.Description>
-                    </Item.Content>
-                  </Item>
+                <Grid.Column stretched={true} key={location.id}>
+                  <div
+                    locationid={location.id}
+                    onClick={() => this.handlerItemClick(location)}
+                  >
+                    <Segment>
+                      <Item>
+                        <Item.Content>
+                          <Item.Header as="a">
+                            {location.locationName}
+                          </Item.Header>
+                          <Item.Description>
+                            <div>{location.phone}</div>
+                            <div>{location.street}</div>
+                            <div>
+                              {location.city}
+                              {location.state !== "" ? "," : ""}
+                              {location.state} {location.zip}
+                            </div>
+                            <div>{location.country}</div>
+                          </Item.Description>
+                        </Item.Content>
+                      </Item>
+                    </Segment>
+                  </div>
                 </Grid.Column>
               ))}
             </Grid>

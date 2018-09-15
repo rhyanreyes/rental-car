@@ -9,6 +9,7 @@ namespace RentalCarsAPI.Services
         int CreateRentalLocation(RentalLocationCreateRequest request);
         void DeleteRentalLocation(int id);
         List<RentalLocation> GetRentalLocations();
+        RentalLocation GetRentalLocation(int id);
         void UpdateRentalLocation(RentalLocationUpdateRequest request);
     }
 }

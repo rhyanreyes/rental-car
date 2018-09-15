@@ -16,7 +16,10 @@ import {
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-import { createRentalLocationPost } from "../services/RentalCarsServer";
+import {
+  createRentalLocationPost,
+  listRentalLocationGet
+} from "../services/RentalCarsServer";
 
 class RentalLocationForm extends Component {
   state = {
@@ -28,7 +31,9 @@ class RentalLocationForm extends Component {
     country: "",
     phone: "",
     lat: 0,
-    long: 0
+    long: 0,
+    id: 0,
+    locationData: {}
   };
 
   jumpRef = React.createRef();
@@ -60,6 +65,20 @@ class RentalLocationForm extends Component {
       });
   };
 
+  getRentalLocation = locationId => {
+    listRentalLocationGet(locationId)
+      .then(response => {
+        console.log("GET by ID success!");
+        console.log(response);
+
+        this.loadForm(response.data);
+      })
+      .catch(error => {
+        console.log("GET by ID failed!");
+        console.log(error);
+      });
+  };
+
   readForm = () => ({
     locationName: this.state.locationName,
     street: this.state.street,
@@ -86,6 +105,22 @@ class RentalLocationForm extends Component {
     });
   };
 
+  loadForm = location => {
+    this.setState({
+      locationName: location.locationName,
+      street: location.street,
+      city: location.city,
+      state: location.state,
+      zip: location.zip,
+      country: location.country,
+      phone: location.phone,
+      lat: location.lat,
+      long: location.long,
+      id: location.id,
+      locationData: location
+    });
+  };
+
   componentDidMount() {
     console.log("RentalLocationForm component mounted");
 
@@ -104,6 +139,16 @@ class RentalLocationForm extends Component {
       block: "start",
       behavior: "instant"
     });
+
+    console.log("RentalLocationForm mounted props: ", this.props);
+
+    // this.props.match.params.locationId
+    const locationId = this.props.match.params.locationId;
+
+    if (locationId) {
+      console.log("RentalLocationForm locationId: ", locationId);
+      this.getRentalLocation(locationId);
+    }
   }
 
   render() {
