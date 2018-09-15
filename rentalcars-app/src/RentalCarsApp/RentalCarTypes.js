@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Container, Form, Icon, Label, Menu, Table } from "semantic-ui-react";
-import { listRentalCarTypesGet } from "../services/RentalCarsServer";
+import {
+  listRentalCarTypesGet,
+  addRentalCarTypePost
+} from "../services/RentalCarsServer";
 
 class RentalCarTypes extends Component {
   state = {
@@ -15,14 +18,29 @@ class RentalCarTypes extends Component {
     this.setState({ editTableCell: true });
   };
 
-  handlerCellKeyPress = event => {};
+  handlerCellKeyDown = event => {
+    // console.log("Key was pressed. Key: ", event.key);
+    // console.log("event: ", event);
+
+    const { editTableCell, tableCellValue, carTypes } = this.state;
+
+    if (event.key === "Enter") {
+      console.log("Enter key pressed");
+      console.log("tableCellValue: ", tableCellValue);
+    }
+
+    if (event.key === "Enter" && editTableCell === true) {
+      const newCarType = { carType: tableCellValue };
+      this.addCarType(newCarType);
+    }
+  };
 
   showFirstRow = () => {
     const { carTypes, editTableCell } = this.state;
     let firstRow;
 
-    console.log("carTypes: ,", carTypes);
-    console.log("editTableCell: ", editTableCell);
+    // console.log("carTypes: ,", carTypes);
+    // console.log("editTableCell: ", editTableCell);
 
     firstRow = null;
 
@@ -43,7 +61,7 @@ class RentalCarTypes extends Component {
             <Form>
               <input
                 placeholder="Click to add a Car Type"
-                onKeyPress={this.handlerCellKeyPress}
+                onKeyDown={this.handlerCellKeyDown}
                 onChange={e =>
                   this.setState({ tableCellValue: e.target.value })
                 }
@@ -67,6 +85,23 @@ class RentalCarTypes extends Component {
       })
       .catch(error => {
         console.log("GET failed!");
+        console.log(error);
+      });
+  };
+
+  addCarType = carType => {
+    console.log("Adding Car Type: ", carType);
+
+    addRentalCarTypePost(carType)
+      .then(response => {
+        console.log("POST success!");
+        console.log(response);
+
+        this.setState({ editTableCell: false });
+        this.listCarTypes();
+      })
+      .catch(error => {
+        console.log("POST failed!");
         console.log(error);
       });
   };
@@ -198,11 +233,11 @@ class RentalCarTypes extends Component {
                 <Table.Cell>None</Table.Cell>
               </Table.Row> */}
               {carTypes &&
-                carTypes.map(carType => {
+                carTypes.map(carType => (
                   <Table.Row onClick={() => this.handlerTableCell(carType)}>
                     <Table.Cell>{carType.carType}</Table.Cell>
-                  </Table.Row>;
-                })}
+                  </Table.Row>
+                ))}
             </Table.Body>
           </Table>
         </Container>
