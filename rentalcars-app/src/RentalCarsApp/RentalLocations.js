@@ -200,25 +200,25 @@ class RentalLocations extends Component {
                     locationid={location.id}
                     onClick={() => this.handlerItemClick(location)}
                   >
-                    <Segment>
-                      <Item>
-                        <Item.Content>
-                          <Item.Header as="a">
-                            {location.locationName}
-                          </Item.Header>
-                          <Item.Description>
-                            <div>{location.phone}</div>
-                            <div>{location.street}</div>
-                            <div>
-                              {location.city}
-                              {location.state !== "" ? "," : ""}
-                              {location.state} {location.zip}
-                            </div>
-                            <div>{location.country}</div>
-                          </Item.Description>
-                        </Item.Content>
-                      </Item>
-                    </Segment>
+                    {/* <Segment> */}
+                    <Item>
+                      <Item.Content>
+                        <Item.Header as="a">
+                          {location.locationName}
+                        </Item.Header>
+                        <Item.Description>
+                          <div>{location.phone}</div>
+                          <div>{location.street}</div>
+                          <div>
+                            {location.city}
+                            {location.state !== "" ? ", " : ""}
+                            {location.state} {location.zip}
+                          </div>
+                          <div>{location.country}</div>
+                        </Item.Description>
+                      </Item.Content>
+                    </Item>
+                    {/* </Segment> */}
                   </div>
                 </Grid.Column>
               ))}
