@@ -20,29 +20,40 @@ import {
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-import { listRentalLocationsGet } from "../services/RentalCarsServer";
+import {
+  listRentalLocationsGet,
+  removeRentalLocationDelete
+} from "../services/RentalCarsServer";
 
 class RentalLocations extends Component {
   state = {
     locationList: [],
     updateMode: null,
+    deleteMode: null,
     headerTitle: ""
   };
 
   jumpRef = React.createRef();
 
   handlerItemClick = location => {
-    const { updateMode } = this.state;
+    const { updateMode, deleteMode } = this.state;
 
     if (updateMode) {
-      console.log("Item clicked");
+      console.log("Item clicked to update");
       console.log(location);
 
       this.props.history.push(`/locationform/${location.id}`);
     }
+
+    if (deleteMode) {
+      console.log("Item clicked to delete");
+      console.log(location);
+    }
   };
 
   listRentalLocations = () => {
+    console.log("Listing Rental Locations...");
+
     listRentalLocationsGet()
       .then(response => {
         console.log("GET success!");
@@ -57,6 +68,22 @@ class RentalLocations extends Component {
       })
       .catch(error => {
         console.log("GET failed!");
+        console.log(error);
+      });
+  };
+
+  removeRentalLocation = location => {
+    console.log("Removing Rental Location: ", location);
+
+    removeRentalLocationDelete(location.id)
+      .then(response => {
+        console.log("DELETE success!");
+        console.log(response);
+
+        this.listRentalLocations();
+      })
+      .catch(error => {
+        console.log("DELETE failed!");
         console.log(error);
       });
   };
@@ -80,7 +107,11 @@ class RentalLocations extends Component {
         headerTitle: "Rental Locations Update!"
       });
     } else {
-      this.setState({ updateMode: false, headerTitle: "Rental Locations!" });
+      this.setState({
+        updateMode: false,
+        deleteMode: false,
+        headerTitle: "Rental Locations!"
+      });
     }
   }
 
@@ -97,16 +128,27 @@ class RentalLocations extends Component {
       if (this.props.updateMode === true) {
         this.setState({
           updateMode: true,
+          deleteMode: false,
           headerTitle: "Rental Locations Update!"
         });
+      } else if (this.props.deleteMode === true) {
+        this.setState({
+          deleteMode: true,
+          updateMode: false,
+          headerTitle: "Rental Locations Remove!"
+        });
       } else {
-        this.setState({ updateMode: false, headerTitle: "Rental Locations!" });
+        this.setState({
+          updateMode: false,
+          deleteMode: false,
+          headerTitle: "Rental Locations!"
+        });
       }
     }
   }
 
   render() {
-    const { locationList, headerTitle } = this.state;
+    const { locationList, headerTitle, updateMode, deleteMode } = this.state;
 
     console.log("render locationList: ", locationList);
 
@@ -115,6 +157,20 @@ class RentalLocations extends Component {
         <Container fluid style={{ marginTop: "7em" }} textAlign="left">
           <div ref={this.jumpRef} />
           <Header as="h1" content={headerTitle} textAlign="center" />
+          {updateMode && (
+            <Header
+              as="h2"
+              content="Click on a location to update"
+              textAlign="center"
+            />
+          )}
+          {deleteMode && (
+            <Header
+              as="h2"
+              content="Click on a location to remove"
+              textAlign="center"
+            />
+          )}
           {/* <Table celled>
           <Table.Header>
             <Table.Row>

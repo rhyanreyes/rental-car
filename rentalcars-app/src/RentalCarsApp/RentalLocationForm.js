@@ -18,7 +18,8 @@ import "semantic-ui-css/semantic.min.css";
 
 import {
   createRentalLocationPost,
-  listRentalLocationGet
+  listRentalLocationGet,
+  updateRentalLocationPut
 } from "../services/RentalCarsServer";
 
 class RentalLocationForm extends Component {
@@ -33,15 +34,26 @@ class RentalLocationForm extends Component {
     lat: 0,
     long: 0,
     id: 0,
-    locationData: {}
+    locationData: {},
+    updateMode: null
   };
 
   jumpRef = React.createRef();
 
   handlerSubmitForm = () => {
-    const newLocation = this.readForm();
+    const { id, updateMode } = this.state;
 
-    this.addRentalLocation(newLocation);
+    if (updateMode) {
+      const updateLocation = this.readForm();
+
+      updateLocation.id = id;
+
+      this.updateRentalLocation(updateLocation);
+    } else {
+      const newLocation = this.readForm();
+
+      this.addRentalLocation(newLocation);
+    }
   };
 
   addRentalLocation = location => {
@@ -58,6 +70,8 @@ class RentalLocationForm extends Component {
           block: "start",
           behavior: "instant"
         });
+
+        this.props.history.push("/locations");
       })
       .catch(error => {
         console.log("POST failed!");
@@ -72,9 +86,29 @@ class RentalLocationForm extends Component {
         console.log(response);
 
         this.loadForm(response.data);
+        this.setState({ locationData: response.data });
       })
       .catch(error => {
         console.log("GET by ID failed!");
+        console.log(error);
+      });
+  };
+
+  updateRentalLocation = location => {
+    console.log("Updating location: ", location);
+
+    updateRentalLocationPut(location.id, location)
+      .then(response => {
+        console.log("PUT success!");
+        console.log(response);
+
+        this.clearForm();
+        this.setState({ updateMode: false });
+
+        this.props.history.goBack();
+      })
+      .catch(error => {
+        console.log("PUT failed!");
         console.log(error);
       });
   };
@@ -116,8 +150,7 @@ class RentalLocationForm extends Component {
       phone: location.phone,
       lat: location.lat,
       long: location.long,
-      id: location.id,
-      locationData: location
+      id: location.id
     });
   };
 
@@ -147,7 +180,12 @@ class RentalLocationForm extends Component {
 
     if (locationId) {
       console.log("RentalLocationForm locationId: ", locationId);
+
       this.getRentalLocation(locationId);
+
+      this.setState({ updateMode: true });
+    } else {
+      this.setState({ updateMode: false });
     }
   }
 

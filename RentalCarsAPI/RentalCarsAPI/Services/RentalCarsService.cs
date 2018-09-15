@@ -184,10 +184,11 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "CarType_Insert";
+                cmd.CommandText = "CarTypes_Insert";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@CarType", request.CarType);
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
 
@@ -201,7 +202,7 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "CarType_SelectAll";
+                cmd.CommandText = "CarTypes_SelectAll";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 using (var reader = cmd.ExecuteReader())
@@ -229,7 +230,7 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "CarType_Update";
+                cmd.CommandText = "CarTypes_Update";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", request.Id);
@@ -245,7 +246,7 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "CarType_Update";
+                cmd.CommandText = "CarTypes_Update";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", id);

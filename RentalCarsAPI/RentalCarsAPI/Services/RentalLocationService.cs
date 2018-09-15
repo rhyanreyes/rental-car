@@ -36,6 +36,7 @@ namespace RentalCarsAPI.Services
                 cmd.Parameters.AddWithValue("@State", request.State);
                 cmd.Parameters.AddWithValue("@Zip", request.Zip);
                 cmd.Parameters.AddWithValue("@Phone", request.Phone);
+                cmd.Parameters.AddWithValue("@Country", request.Country);
                 cmd.Parameters.AddWithValue("@Lat", request.Lat);
                 cmd.Parameters.AddWithValue("@Long", request.Long);
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -90,6 +91,12 @@ namespace RentalCarsAPI.Services
                         if (phoneValue != DBNull.Value)
                         {
                             location.Phone = (string)phoneValue;
+                        }
+
+                        object countryValue = reader["Country"];
+                        if (countryValue != DBNull.Value)
+                        {
+                            location.Country = (string)countryValue;
                         }
 
                         object latValue = reader["Lat"];
@@ -167,6 +174,12 @@ namespace RentalCarsAPI.Services
                         location.Phone = (string)phoneValue;
                     }
 
+                    object countryValue = reader["Country"];
+                    if (countryValue != DBNull.Value)
+                    {
+                        location.Country = (string)countryValue;
+                    }
+
                     object latValue = reader["Lat"];
                     if (latValue != DBNull.Value)
                     {
@@ -205,6 +218,7 @@ namespace RentalCarsAPI.Services
                 cmd.Parameters.AddWithValue("@State", request.State);
                 cmd.Parameters.AddWithValue("@Zip", request.Zip);
                 cmd.Parameters.AddWithValue("@Phone", request.Phone);
+                cmd.Parameters.AddWithValue("@Country", request.Country);
                 cmd.Parameters.AddWithValue("@Lat", request.Lat);
                 cmd.Parameters.AddWithValue("@Long", request.Long);
 

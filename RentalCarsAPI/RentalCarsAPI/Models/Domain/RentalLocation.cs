@@ -14,6 +14,7 @@ namespace RentalCarsAPI.Models.Domain
         public string State { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
+        public string Country { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
         public DateTime DateCreated { get; set; }

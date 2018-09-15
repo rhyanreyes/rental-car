@@ -20,6 +20,8 @@ import RentalCarsMenuPage from "./RentalCarsMenuPage";
 import RentalCarsForm from "./RentalCarsForm";
 import RentalLocationForm from "./RentalLocationForm";
 import RentalLocations from "./RentalLocations";
+import RentalCarTypes from "./RentalCarTypes";
+import RentalCarTypesForm from "./RentalCarTypesForm";
 
 class RentalCarsApp extends Component {
   state = {
@@ -64,7 +66,13 @@ class RentalCarsApp extends Component {
 
     switch (data.name) {
       case "AddCar":
-        this.props.history.push(`/carform`);
+        this.props.history.push("/carform");
+        break;
+      case "AddCarType":
+        this.props.history.push("/cartypeform");
+        break;
+      case "ListCarTypes":
+        this.props.history.push("/cartypes");
         break;
       case "AddLocation":
         this.props.history.push("/locationform");
@@ -75,6 +83,8 @@ class RentalCarsApp extends Component {
       case "UpdateLocation":
         this.props.history.push("/locations/update");
         break;
+      case "RemoveLocation":
+        this.props.history.push("/locations/remove");
       default:
         break;
     }
@@ -256,11 +266,16 @@ class RentalCarsApp extends Component {
           /> */}
         </Container>
 
-        {/* {showRentalCarsInv && <RentalCarsInventory />} */}
         <Switch>
-          <Route path="/cars" component={RentalCarsInventory} />
+          <Route exact path="/cars" component={RentalCarsInventory} />
           {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
-          <Route path="/carform" component={RentalCarsForm} />
+          <Route exact path="/carform" component={RentalCarsForm} />
+          <Route exact path="/cartypes" component={RentalCarTypes} />
+          <Route exact path="/cartypeform" component={RentalCarTypesForm} />
+          <Route
+            path="/cartypesform/:carTypeId(\d+)"
+            component={RentalCarTypesForm}
+          />
           <Route exact path="/locationform" component={RentalLocationForm} />
           <Route
             path="/locationform/:locationId(\d+)"
@@ -271,7 +286,10 @@ class RentalCarsApp extends Component {
             path="/locations/update"
             render={props => <RentalLocations {...props} updateMode={true} />}
           />
-          {/* <Route path="locations/update" component={RentalLocations} /> */}
+          <Route
+            path="/locations/remove"
+            render={props => <RentalLocations {...props} deleteMode={true} />}
+          />
         </Switch>
 
         <Segment
