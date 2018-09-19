@@ -51,6 +51,14 @@ namespace RentalCarsAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, rentalCars);
         }
 
+        [Route("{id:int}"), HttpGet]
+        public HttpResponseMessage GetRentalCarById(int id)
+        {
+            RentalCar rentalCar = rentalCarsService.GetRentalCarById(id);
+
+            return Request.CreateResponse(HttpStatusCode.OK, rentalCar);
+        }
+
         [Route("{id:int}"), HttpPut]
         public HttpResponseMessage PutUpdateRentalCar(int id, RentalCarUpdateRequest updateRequest)
         {

@@ -29,9 +29,9 @@ class RentalCarsApp extends Component {
   };
 
   handlerMenuBar = (event, data) => {
-    console.log("handlerMenuBar data props: ", data);
+    // console.log("handlerMenuBar data props: ", data);
 
-    console.log("props: ", this.props);
+    // console.log("props: ", this.props);
 
     switch (data.name) {
       case "Home":
@@ -62,7 +62,7 @@ class RentalCarsApp extends Component {
   handlerDropdownItem = (event, data) => {
     event.stopPropagation();
 
-    console.log("DropdownItem data props: ", data);
+    // console.log("DropdownItem data props: ", data);
 
     switch (data.name) {
       case "AddCar":
@@ -70,6 +70,12 @@ class RentalCarsApp extends Component {
         break;
       case "ListCars":
         this.props.history.push("/cars");
+        break;
+      case "UpdateCar":
+        this.props.history.push("/cars/update");
+        break;
+      case "RemoveCar":
+        this.props.history.push("/cars/remove");
         break;
       case "AddCarType":
         this.props.history.push("/cartypeform");
@@ -105,21 +111,9 @@ class RentalCarsApp extends Component {
 
     return (
       <div>
-        {/* <h1>Rental Cars!</h1> */}
-
         <Menu fixed="top" inverted>
           <Container>
             <Menu.Item as="a" header>
-              {/* <Image
-                size="mini"
-                // src="/images/B3mOD8fH_400x400.jpg"
-                style={{ marginRight: "1.5em" }}
-              /> */}
-              {/* <Image
-                size="mini"
-                src="/logo.png"
-                style={{ marginRight: "1.5em" }}
-              /> */}
               Rental Cars
             </Menu.Item>
             <Menu.Item as="a" onClick={this.handlerMenuBar} name="Home">
@@ -233,76 +227,52 @@ class RentalCarsApp extends Component {
             </Dropdown>
           </Container>
         </Menu>
-        <Container text style={{ marginTop: "7em" }}>
-          {/* <Header as="h1">Semantic UI React Fixed Template</Header>
-          <p>
-            This is a basic fixed menu template using fixed size containers.
-          </p>
-          <p>
-            A text container is used for the main container, which is useful for
-            single column layouts.
-          </p> */}
+        <Container style={{ marginTop: "7em" }}>
           <Header
             as="h1"
             content="Rental Cars (using Semantic UI)"
             textAlign="center"
           />
 
-          {/* <Image
-            src="/images/wireframe/media-paragraph.png"
-            style={{ marginTop: "2em" }}
-          />
-          <Image
-            src="/images/wireframe/paragraph.png"
-            style={{ marginTop: "2em" }}
-          />
-          <Image
-            src="/images/wireframe/paragraph.png"
-            style={{ marginTop: "2em" }}
-          />
-          <Image
-            src="/images/wireframe/paragraph.png"
-            style={{ marginTop: "2em" }}
-          />
-          <Image
-            src="/images/wireframe/paragraph.png"
-            style={{ marginTop: "2em" }}
-          />
-          <Image
-            src="/images/wireframe/paragraph.png"
-            style={{ marginTop: "2em" }}
-          />
-          <Image
-            src="/images/wireframe/paragraph.png"
-            style={{ marginTop: "2em" }}
-          /> */}
+          <Switch>
+            <Route exact path="/cars" component={RentalCarsInventory} />
+            {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
+            <Route exact path="/carform" component={RentalCarsForm} />
+            <Route path="/carform/:carId(\d+)" component={RentalCarsForm} />
+            <Route
+              path="/cars/update"
+              render={props => (
+                <RentalCarsInventory {...props} updateMode={true} />
+              )}
+            />
+            <Route
+              path="/cars/remove"
+              render={props => (
+                <RentalCarsInventory {...props} deleteMode={true} />
+              )}
+            />
+            <Route exact path="/cartypes" component={RentalCarTypes} />
+            <Route exact path="/cartypeform" component={RentalCarTypesForm} />
+            <Route
+              path="/cartypesform/:carTypeId(\d+)"
+              component={RentalCarTypesForm}
+            />
+            <Route exact path="/locationform" component={RentalLocationForm} />
+            <Route
+              path="/locationform/:locationId(\d+)"
+              component={RentalLocationForm}
+            />
+            <Route exact path="/locations" component={RentalLocations} />
+            <Route
+              path="/locations/update"
+              render={props => <RentalLocations {...props} updateMode={true} />}
+            />
+            <Route
+              path="/locations/remove"
+              render={props => <RentalLocations {...props} deleteMode={true} />}
+            />
+          </Switch>
         </Container>
-
-        <Switch>
-          <Route exact path="/cars" component={RentalCarsInventory} />
-          {/* <Route path="/main" component={RentalCarsMenuPage} /> */}
-          <Route exact path="/carform" component={RentalCarsForm} />
-          <Route exact path="/cartypes" component={RentalCarTypes} />
-          <Route exact path="/cartypeform" component={RentalCarTypesForm} />
-          <Route
-            path="/cartypesform/:carTypeId(\d+)"
-            component={RentalCarTypesForm}
-          />
-          <Route exact path="/locationform" component={RentalLocationForm} />
-          <Route
-            path="/locationform/:locationId(\d+)"
-            component={RentalLocationForm}
-          />
-          <Route exact path="/locations" component={RentalLocations} />
-          <Route
-            path="/locations/update"
-            render={props => <RentalLocations {...props} updateMode={true} />}
-          />
-          <Route
-            path="/locations/remove"
-            render={props => <RentalLocations {...props} deleteMode={true} />}
-          />
-        </Switch>
 
         <Segment
           inverted

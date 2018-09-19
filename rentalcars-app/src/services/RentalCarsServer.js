@@ -14,6 +14,24 @@ export function listRentalCarsGet() {
   return axios.get(url);
 }
 
+export function loadRentalCarGet(carId) {
+  const url = `/api/rentalcars/${carId}`;
+
+  return axios.get(url);
+}
+
+export function updateRentalCarPut(rentalCar) {
+  const url = `/api/rentalcars/${rentalCar.Id}`;
+
+  return axios.put(url, rentalCar);
+}
+
+export function removeRentalCarDelete(carId) {
+  const url = `/api/rentalcars/${carId}`;
+
+  return axios.delete(url);
+}
+
 export function listRentalCarTypesGet() {
   const url = `/api/rentalcars/cartype`;
 
