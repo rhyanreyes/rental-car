@@ -21,6 +21,9 @@ namespace RentalCarsAPI.Services
             string jQuerySelect = "";
             var table = document.QuerySelector(jQuerySelect);
 
+            string value = "Scraper doesn't work";
+
+            return value;
         }
     }
 }

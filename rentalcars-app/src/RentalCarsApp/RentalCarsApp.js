@@ -74,6 +74,9 @@ class RentalCarsApp extends Component {
       case "ListCarTypes":
         this.props.history.push("/cartypes");
         break;
+      case "CarTypes":
+        this.props.history.push("/cartypes");
+        break;
       case "AddLocation":
         this.props.history.push("/locationform");
         break;
@@ -150,7 +153,13 @@ class RentalCarsApp extends Component {
                   Remove (Delete)
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Header>Car Types</Dropdown.Header>
+                <Dropdown.Item
+                  onClick={this.handlerDropdownItem}
+                  name="CarTypes"
+                >
+                  Car Types
+                </Dropdown.Item>
+                {/* <Dropdown.Header>Car Types</Dropdown.Header> */}
                 {/* <Dropdown.Item>
                   <i className="dropdown icon" />
                   <span className="text">Inventory</span>
@@ -160,7 +169,7 @@ class RentalCarsApp extends Component {
                   </Dropdown.Menu>
                 </Dropdown.Item>
                 <Dropdown.Item>List Item</Dropdown.Item> */}
-                <Dropdown.Item
+                {/* <Dropdown.Item
                   onClick={this.handlerDropdownItem}
                   name="AddCarType"
                 >
@@ -183,7 +192,7 @@ class RentalCarsApp extends Component {
                   name="RemoveCarType"
                 >
                   Remove (Delete)
-                </Dropdown.Item>
+                </Dropdown.Item> */}
               </Dropdown.Menu>
             </Dropdown>
             <Dropdown

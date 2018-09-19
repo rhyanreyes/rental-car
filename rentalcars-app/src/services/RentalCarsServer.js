@@ -14,6 +14,12 @@ export function addRentalCarTypePost(carType) {
   return axios.post(url, carType);
 }
 
+export function updateRentalCarTypePut(carType) {
+  const url = `/api/rentalcars/cartype/${carType.id}`;
+
+  return axios.put(url, carType);
+}
+
 export function createRentalLocationPost(locationObj) {
   const url = `/api/rentallocation`;
 
