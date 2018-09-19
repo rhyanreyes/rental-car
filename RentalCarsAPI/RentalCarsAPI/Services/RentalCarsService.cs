@@ -61,6 +61,7 @@ namespace RentalCarsAPI.Services
                     {
                         RentalCar car = new RentalCar();
 
+                        car.Id = (int)reader["Id"];
                         car.Make = (string)reader["Make"];
                         car.Model = (string)reader["Model"];
                         car.Year = (int)reader["Year"];
@@ -113,6 +114,7 @@ namespace RentalCarsAPI.Services
 
                     RentalCar car = new RentalCar();
 
+                    car.Id = (int)reader["Id"];
                     car.Make = (string)reader["Make"];
                     car.Model = (string)reader["Model"];
                     car.Year = (int)reader["Year"];
@@ -246,7 +248,7 @@ namespace RentalCarsAPI.Services
             {
                 var cmd = con.CreateCommand();
 
-                cmd.CommandText = "CarTypes_Update";
+                cmd.CommandText = "CarTypes_Delete";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", id);

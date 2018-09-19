@@ -2,6 +2,18 @@ import axios from "axios";
 
 // "http://localhost:59435"
 
+export function addRentalCarPost(rentalCar) {
+  const url = `/api/rentalcars`;
+
+  return axios.post(url, rentalCar);
+}
+
+export function listRentalCarsGet() {
+  const url = `/api/rentalcars`;
+
+  return axios.get(url);
+}
+
 export function listRentalCarTypesGet() {
   const url = `/api/rentalcars/cartype`;
 
@@ -47,5 +59,5 @@ export function updateRentalLocationPut(id, locationObj) {
 export function removeRentalLocationDelete(id) {
   const url = `/api/rentallocation/${id}`;
 
-  return axios.delete(id);
+  return axios.delete(url);
 }

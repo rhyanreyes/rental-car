@@ -68,6 +68,9 @@ class RentalCarsApp extends Component {
       case "AddCar":
         this.props.history.push("/carform");
         break;
+      case "ListCars":
+        this.props.history.push("/cars");
+        break;
       case "AddCarType":
         this.props.history.push("/cartypeform");
         break;
@@ -127,7 +130,7 @@ class RentalCarsApp extends Component {
               item
               simple
               text="Inventory"
-              onClick={this.handlerDropdown}
+              // onClick={this.handlerDropdown}
             >
               <Dropdown.Menu>
                 <Dropdown.Header>Rental Cars</Dropdown.Header>

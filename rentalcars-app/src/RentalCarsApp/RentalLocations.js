@@ -48,6 +48,8 @@ class RentalLocations extends Component {
     if (deleteMode) {
       console.log("Item clicked to delete");
       console.log(location);
+
+      this.removeRentalLocation(location);
     }
   };
 
@@ -60,10 +62,12 @@ class RentalLocations extends Component {
         console.log(response);
 
         this.setState({ locationList: response.data }, () => {
-          this.jumpRef.current.scrollIntoView({
-            block: "start",
-            behavior: "instant"
-          });
+          // this.jumpRef.current.scrollIntoView({
+          //   block: "start",
+          //   behavior: "instant"
+          // });
+
+          this.props.history.push("/locations");
         });
       })
       .catch(error => {
