@@ -10,6 +10,7 @@ export default class RentalCarsMobileApp extends Component {
         <Text>Shake your phone to open the developer menu.</Text> */}
         <Text>Rental Cars Mobile App!</Text>
         <Text>First mobile app made by Rhyan Reyes</Text>
+        <Text>Another line for the app</Text>
       </View>
     );
   }
