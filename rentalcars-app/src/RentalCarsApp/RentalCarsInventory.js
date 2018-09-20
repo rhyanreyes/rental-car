@@ -110,7 +110,7 @@ class RentalCarsInventory extends Component {
       this.setState({
         updateMode: false,
         deleteMode: false,
-        headerTitle: "Rental Cars Inventory! (using Semantic UI)"
+        headerTitle: "Rental Cars Inventory!"
       });
     }
   }
