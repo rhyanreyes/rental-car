@@ -2,7 +2,10 @@ import React, { Component } from "react";
 // import { StyleSheet, Text, View } from "react-native";
 import { StyleSheet, Text } from "react-native";
 
-import { NavigationBar, Title, ImageBackground, Icon, View } from "@shoutem/ui";
+// import { NavigationBar, Title, ImageBackground, Icon, View } from "@shoutem/ui";
+import { Title, ImageBackground, Icon, View } from "@shoutem/ui";
+
+import { NavigationBar } from "@shoutem/ui/navigation";
 
 export default class RentalCarsMobileApp extends Component {
   render() {
